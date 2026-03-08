@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Snake Game</title>
+<style>
+canvas{
+background:black;
+display:block;
+margin:auto;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="game" width="400" height="400"></canvas>
+
+<script>
+let canvas = document.getElementById("game");
+let ctx = canvas.getContext("2d");
+
+let box = 20;
+let snake = [{x: 200, y: 200}];
+let food = {x: 100, y: 100};
+let direction;
+
+document.addEventListener("keydown", dir);
+
+function dir(e){
+if(e.keyCode==37) direction="LEFT";
+if(e.keyCode==38) direction="UP";
+if(e.keyCode==39) direction="RIGHT";
+if(e.keyCode==40) direction="DOWN";
+}
+
+function draw(){
+
+ctx.fillStyle="black";
+ctx.fillRect(0,0,400,400);
+
+for(let i=0;i<snake.length;i++){
+ctx.fillStyle="lime";
+ctx.fillRect(snake[i].x,snake[i].y,box,box);
+}
+
+ctx.fillStyle="red";
+ctx.fillRect(food.x,food.y,box,box);
+
+let snakeX = snake[0].x;
+let snakeY = snake[0].y;
+
+if(direction=="LEFT") snakeX -= box;
+if(direction=="UP") snakeY -= box;
+if(direction=="RIGHT") snakeX += box;
+if(direction=="DOWN") snakeY += box;
+
+let newHead = {x:snakeX,y:snakeY};
+snake.unshift(newHead);
+
+snake.pop();
+}
+
+setInterval(draw,100);
+</script>
+
+</body>
+</html>
